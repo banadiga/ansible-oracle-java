@@ -41,6 +41,11 @@
     jdk_version_detail: "{{ java_version }}u{{ java_subversion }}-b14"
   when: java_version == 8 and java_subversion == 111
 
+- name: set internal vars for 1.8.0_131
+  set_fact:
+    jdk_version_detail: "{{ java_version }}u{{ java_subversion }}-b113/d54c1d3a095b4ff2b6607d096fa80163"
+  when: java_version == 8 and java_subversion == 131
+
 - name: set internal vars for 1.8.0_102
   set_fact:
     jdk_version_detail: "{{ java_version }}u{{ java_subversion }}-b14"
