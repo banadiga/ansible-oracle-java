@@ -9,6 +9,12 @@ Vagrant.configure(2) do |config|
         #node.vm.box = "bento/centos-7.2"
         #node.vm.box = "bento/centos-6.7"
 
+        # VM configuration
+        node.vm.provider :virtualbox do |vb|
+            vb.name = "main"
+            vb.customize ["modifyvm", :id, "--nicpromisc2", "allow-all", "--groups", "/Ansible oracle java"]
+        end
+
         node.vm.provision "ansible" do |ansible|
             ansible.playbook = "test.yml"
             #ansible.playbook = "prefetch.yml"
@@ -22,6 +28,11 @@ Vagrant.configure(2) do |config|
     config.vm.define "docker" do |node|
         node.vm.box = "williamyeh/ubuntu-trusty64-docker"
 
+        # VM configuration
+        node.vm.provider :virtualbox do |vb|
+            vb.name = "docker"
+            vb.customize ["modifyvm", :id, "--nicpromisc2", "allow-all", "--groups", "/Ansible oracle java"]
+        end
         node.vm.provision "shell", inline: <<-SHELL
             cd /vagrant
             docker build  -f test/Dockerfile-ubuntu14.04  -t java_trusty   .
